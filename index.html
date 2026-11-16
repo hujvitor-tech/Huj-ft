@@ -9,53 +9,55 @@
 <meta name="apple-mobile-web-app-title" content="HUJ Studio AI">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon.svg">
-<title>HUJ Studio AI</title>
+<title>HUJ Studio AI 2.0</title>
 <style>
 :root{color-scheme:dark;--bg:#090b10;--panel:#141821;--panel2:#1d2430;--line:#2b3442;--muted:#9ca8b8;--accent:#b7f36b}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f4f6f8;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
-header{padding:18px 18px 12px;display:flex;justify-content:space-between;align-items:center}h1{font-size:20px;letter-spacing:1.8px;margin:0}small,.muted{color:var(--muted)}.pill{border:1px solid var(--line);border-radius:30px;padding:6px 10px;font-size:11px;color:var(--accent)}
-nav{display:flex;gap:8px;padding:0 14px 12px;overflow:auto}nav button,.btn{border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:13px;padding:11px 14px;font-weight:600}nav button.active,.primary{background:var(--accent);color:#10140b;border-color:var(--accent)}
-main{padding:0 14px 24px}.screen{display:none}.screen.active{display:block}.cameraBox{position:relative;background:#000;border-radius:22px;overflow:hidden;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}video{width:100%;height:100%;object-fit:cover}#cameraPlaceholder{position:absolute;text-align:center;color:#aeb8c5;padding:20px}.cameraOverlay{position:absolute;inset:12px;display:flex;justify-content:space-between;pointer-events:none}.cameraOverlay span{font-size:12px;background:#0008;padding:7px 9px;border-radius:20px;height:max-content}
+header{padding:18px 18px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px}h1{font-size:20px;letter-spacing:1.8px;margin:0}small,.muted,.hint{color:var(--muted)}.pill{border:1px solid var(--line);border-radius:30px;padding:6px 10px;font-size:11px;color:var(--accent);white-space:nowrap}
+nav{display:flex;gap:8px;padding:0 14px 12px;overflow:auto}nav button,.btn{border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:13px;padding:11px 14px;font-weight:600;white-space:nowrap}nav button.active,.primary{background:var(--accent);color:#10140b;border-color:var(--accent)}
+main{padding:0 14px 24px}.screen{display:none}.screen.active{display:block}.cameraBox{position:relative;background:#000;border-radius:22px;overflow:hidden;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}video{width:100%;height:100%;object-fit:cover}#cameraPlaceholder{position:absolute;text-align:center;color:#aeb8c5;padding:20px}.cameraOverlay{position:absolute;inset:12px;display:flex;justify-content:space-between;pointer-events:none}.cameraOverlay span{font-size:12px;background:#0008;padding:7px 9px;border-radius:20px;height:max-content}.gridline{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 33%,#fff6 33.2%,transparent 33.5%,transparent 66%,#fff6 66.2%,transparent 66.5%),linear-gradient(0deg,transparent 33%,#fff6 33.2%,transparent 33.5%,transparent 66%,#fff6 66.2%,transparent 66.5%);display:none}
 .controls{display:flex;align-items:center;justify-content:center;gap:18px;padding:17px}.shutter{width:72px;height:72px;border:5px solid #fff;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px #ffffff33}.round{width:45px;height:45px;border-radius:50%;border:1px solid var(--line);background:var(--panel2);color:#fff;font-size:18px}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:12px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.field{margin:13px 0}.field label{display:flex;justify-content:space-between;color:#dce2ea;font-size:13px;margin-bottom:8px}input[type=range]{width:100%;accent-color:var(--accent)}button{cursor:pointer}button:disabled{opacity:.45}
 #gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:12px}.thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:#222}.empty{padding:35px 15px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:16px}
 #editImage{width:100%;max-height:55vh;object-fit:contain;background:#000;border-radius:15px;display:none}
-.preset{font-size:12px;padding:10px 8px}.hint{font-size:12px;line-height:1.5;color:var(--muted)}.notice{background:#202a1b;border:1px solid #425b2b;color:#d8f6b5;padding:11px;border-radius:13px;font-size:12px;line-height:1.45;margin:12px 0}
-#assistantResult{font-size:14px;line-height:1.55;color:#e4e9ef}
+.preset{font-size:12px;padding:10px 8px}.hint{font-size:12px;line-height:1.5}.notice{background:#202a1b;border:1px solid #425b2b;color:#d8f6b5;padding:11px;border-radius:13px;font-size:12px;line-height:1.45;margin:12px 0}
+#assistantResult{font-size:14px;line-height:1.55;color:#e4e9ef}.toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:#dce2ea}.toggle input{accent-color:var(--accent)}
+select{background:#1d2430;color:white;border:1px solid var(--line);border-radius:10px;padding:9px;max-width:100%}
 footer{text-align:center;color:#647184;font-size:11px;padding:16px}
 </style>
 </head>
 <body>
-<header><div><h1>HUJ <span style="color:var(--accent)">STUDIO AI</span></h1><small>CAPTURE · EDIT · CREATE</small></div><span class="pill">OFFLINE FIRST</span></header>
+<header><div><h1>HUJ <span style="color:var(--accent)">STUDIO AI</span></h1><small>CAPTURE · EDIT · CREATE</small></div><span class="pill">VERSION 2.0 · OFFLINE FIRST</span></header>
 <nav>
-<button class="active" data-tab="camera">Câmera</button><button data-tab="edit">Editor</button><button data-tab="library">Biblioteca</button><button data-tab="assistant">Assistente IA</button>
+<button class="active" data-tab="camera">Câmera Pro</button><button data-tab="edit">Editor Pro</button><button data-tab="library">Biblioteca</button><button data-tab="assistant">Assistente IA</button>
 </nav>
 <main>
 <section id="camera" class="screen active">
- <div class="cameraBox"><video id="video" autoplay playsinline muted></video><div id="cameraPlaceholder">Toque em <b>Ativar câmera</b><br>para começar</div><div class="cameraOverlay"><span id="cameraStatus">CÂMERA DESLIGADA</span><span>● HUJ</span></div></div>
- <div class="controls"><button class="round" id="switchCamera" aria-label="Trocar câmera">↻</button><button class="shutter" id="capture" aria-label="Fotografar" disabled></button><button class="round" id="flash" aria-label="Flash">⚡</button></div>
+ <div class="cameraBox"><video id="video" autoplay playsinline muted></video><div id="cameraPlaceholder">Toque em <b>Ativar câmera</b><br>para começar</div><div class="gridline" id="gridline"></div><div class="cameraOverlay"><span id="cameraStatus">CÂMERA DESLIGADA</span><span>● HUJ</span></div></div>
+ <div class="controls"><button class="round" id="switchCamera" aria-label="Trocar câmera">↻</button><button class="shutter" id="capture" aria-label="Fotografar" disabled></button><button class="round" id="torch" aria-label="Flash">⚡</button></div>
  <div class="grid"><button class="btn primary" id="startCamera">Ativar câmera</button><button class="btn" id="stopCamera">Desligar</button></div>
  <div class="panel">
-  <div class="row"><b>Controles disponíveis</b><small>Automático</small></div>
-  <p class="hint">O Safari controla foco, exposição e processamento automático. Controles manuais avançados dependem do suporte do navegador e do aparelho; serão adicionados apenas quando forem realmente compatíveis.</p>
+  <div class="row"><b>Ferramentas de captura</b><label class="toggle"><input type="checkbox" id="gridToggle"> Grade 3×3</label></div>
+  <div class="field"><label><span>Zoom</span><output id="zoomOut">1×</output></label><input type="range" id="zoom" min="1" max="1" step=".1" value="1" disabled></div>
+  <div class="field"><label><span>Compensação de exposição</span><output id="exposureOut">0</output></label><input type="range" id="exposure" min="0" max="0" step=".1" value="0" disabled></div>
+  <div class="row" style="flex-wrap:wrap"><label class="toggle"><input type="checkbox" id="timerToggle"> Temporizador 3 s</label><span class="hint" id="capabilities">Controles automáticos do aparelho</span></div>
  </div>
- <div class="notice">Dica: para usar a câmera, abra esta aplicação por um endereço HTTPS e permita o acesso quando o iPhone perguntar.</div>
+ <div class="notice">Os controles de zoom, exposição e flash aparecem somente quando o navegador e a câmera informam suporte. Foco, ISO, obturador manual e RAW não são garantidos no Chrome/Safari do iPhone.</div>
 </section>
 <section id="edit" class="screen">
  <div class="panel">
   <div class="row"><b>Editor de fotografia</b><button class="btn" id="choosePhoto">Abrir foto</button></div>
   <input id="fileInput" type="file" accept="image/*" hidden>
-  <p class="hint">Escolha uma foto da sua biblioteca ou abra uma foto capturada no HUJ.</p>
+  <p class="hint">Edite uma captura ou importe uma imagem. A original não é alterada.</p>
   <img id="editImage" alt="Prévia da foto em edição">
   <div id="editEmpty" class="empty">Sua foto aparecerá aqui.</div>
  </div>
  <div class="panel">
-  <b>Ajustes</b>
-  <div id="sliders"></div>
-  <div class="row" style="flex-wrap:wrap;margin-top:12px"><button class="btn" id="resetEdit">Redefinir</button><button class="btn primary" id="saveEdit">Exportar foto</button></div>
+  <b>Ajustes profissionais</b><div id="sliders"></div>
+  <div class="row" style="flex-wrap:wrap;margin-top:12px"><button class="btn" id="resetEdit">Redefinir</button><button class="btn primary" id="saveEdit">Exportar edição</button></div>
  </div>
  <div class="panel"><b>Presets</b><div class="grid" style="margin-top:10px">
-  <button class="btn preset" data-preset="natural">Natural</button><button class="btn preset" data-preset="cinema">Cinematográfico</button><button class="btn preset" data-preset="dark">Dark urbano</button><button class="btn preset" data-preset="mono">Preto e branco</button>
+  <button class="btn preset" data-preset="natural">Natural</button><button class="btn preset" data-preset="cinema">Cinematográfico</button><button class="btn preset" data-preset="dark">Dark urbano</button><button class="btn preset" data-preset="mono">Preto e branco</button><button class="btn preset" data-preset="warm">Quente</button><button class="btn preset" data-preset="cool">Frio</button>
  </div></div>
 </section>
 <section id="library" class="screen">
@@ -64,40 +66,129 @@ footer{text-align:center;color:#647184;font-size:11px;padding:16px}
 </section>
 <section id="assistant" class="screen">
  <div class="panel">
-  <b>Assistente de fotografia</b>
-  <p class="hint">Análise local básica da imagem. Não envia suas fotos para a internet.</p>
+  <b>Assistente inteligente offline</b>
+  <p class="hint">Analisa luminosidade e distribuição tonal localmente. Suas fotos não são enviadas para servidores.</p>
   <button class="btn primary" id="analyze">Analisar foto em edição</button>
   <div id="assistantResult" style="margin-top:14px">Abra uma foto no Editor para receber sugestões.</div>
  </div>
- <div class="panel"><b>O que esta versão já consegue fazer</b><p class="hint">A primeira versão usa regras locais para sugerir ajustes de brilho, contraste e cor. Reconhecimento avançado por modelos de IA será uma etapa posterior, pois precisamos testar modelos leves que caibam no iPhone XR.</p></div>
+ <div class="panel"><b>Como funciona</b><p class="hint">Esta versão usa análise computacional local e regras fotográficas. Não é IA generativa nem reconhecimento semântico de objetos. Recursos de IA maiores exigiriam modelos compatíveis com a memória e o processamento do iPhone XR.</p></div>
 </section>
 </main>
-<footer>HUJ STUDIO AI · VERSÃO 1.0 · SUAS FOTOS FICAM NO SEU APARELHO</footer>
+<footer>HUJ STUDIO AI · VERSÃO 2.0 · PROCESSAMENTO LOCAL</footer>
 <script>
 const $=s=>document.querySelector(s);
-let stream=null,facing='environment',currentImage=null,currentUrl=null,flashOn=false,db;
+let stream=null,facing='environment',currentImage=null,currentUrl=null,db=null,track=null,torchOn=false,camCaps={};
 const DB='huj-studio-db',STORE='photos';
 function openDB(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(STORE,{keyPath:'id',autoIncrement:true});r.onsuccess=()=>{db=r.result;resolve(db)};r.onerror=()=>reject(r.error)})}
 function saveBlob(blob){return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).add({blob,created:Date.now()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}
 function allPhotos(){return new Promise((resolve,reject)=>{const r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
-async function startCamera(){try{if(!navigator.mediaDevices?.getUserMedia)throw Error('Câmera indisponível. Abra o app em Safari por HTTPS.');stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:facing},width:{ideal:1920},height:{ideal:1440}}});$('#video').srcObject=stream;$('#cameraPlaceholder').hidden=true;$('#cameraStatus').textContent='CÂMERA ATIVA';$('#capture').disabled=false}catch(e){alert('Não foi possível abrir a câmera: '+e.message)}}
-function stopCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}$('#video').srcObject=null;$('#cameraPlaceholder').hidden=false;$('#cameraStatus').textContent='CÂMERA DESLIGADA';$('#capture').disabled=true}
-async function capture(){if(!stream)return;const v=$('#video'),c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);c.toBlob(async b=>{if(!b)return;await saveBlob(b);loadGallery();openForEdit(b);alert('Foto salva na biblioteca do HUJ Studio AI!')},'image/jpeg',.94)}
-const controls=[['Brilho','brightness',50,0,200],['Contraste','contrast',100,0,200],['Saturação','saturate',100,0,200],['Temperatura','sepia',0,0,100],['Preto e branco','grayscale',0,0,100]];
-function buildSliders(){const box=$('#sliders');box.innerHTML='';controls.forEach(([label,key,val,min,max])=>{const d=document.createElement('div');d.className='field';d.innerHTML=`<label><span>${label}</span><output>${val}</output></label><input type="range" min="${min}" max="${max}" value="${val}" data-key="${key}">`;d.querySelector('input').addEventListener('input',e=>{e.target.previousElementSibling.querySelector('output').value=e.target.value;applyFilters()});box.append(d)})}
-function filterString(){const vals={};$('#sliders').querySelectorAll('input').forEach(i=>vals[i.dataset.key]=+i.value);return `brightness(${vals.brightness/100}) contrast(${vals.contrast/100}) saturate(${vals.saturate/100}) sepia(${vals.sepia/100}) grayscale(${vals.grayscale/100})`}
-function applyFilters(){if(currentImage)$('#editImage').style.filter=filterString()}
-function reset(){const defaults=[50,100,100,0,0];$('#sliders').querySelectorAll('input').forEach((i,n)=>{i.value=defaults[n];i.previousElementSibling.querySelector('output').value=defaults[n]});applyFilters()}
-function openForEdit(blob){if(currentUrl)URL.revokeObjectURL(currentUrl);currentUrl=URL.createObjectURL(blob);currentImage=new Image();currentImage.onload=()=>{$('#editImage').src=currentUrl;$('#editImage').style.display='block';$('#editEmpty').style.display='none';reset();showTab('edit')};currentImage.src=currentUrl}
+async function startCamera(){
+ try{
+  stopCamera(); if(!navigator.mediaDevices?.getUserMedia)throw Error('Câmera indisponível. Abra por HTTPS.');
+  stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:facing},width:{ideal:1920},height:{ideal:1440}}});
+  $('#video').srcObject=stream; await $('#video').play(); track=stream.getVideoTracks()[0]; $('#cameraPlaceholder').hidden=true;$('#cameraStatus').textContent='CÂMERA ATIVA';$('#capture').disabled=false;
+  setupCapabilities();
+ }catch(e){alert('Não foi possível abrir a câmera: '+e.message)}
+}
+function setupCapabilities(){
+ const caps=track?.getCapabilities?.()||{};camCaps=caps;
+ const zoom=$('#zoom'),exp=$('#exposure');
+ if(caps.zoom){zoom.min=caps.zoom.min;zoom.max=caps.zoom.max;zoom.step=caps.zoom.step||.1;zoom.value=caps.zoom.min;zoom.disabled=false;$('#zoomOut').textContent=Number(zoom.value).toFixed(1)+'×'}else{zoom.disabled=true;zoom.min=zoom.max=1;zoom.value=1;$('#zoomOut').textContent='Não suportado'}
+ if(caps.exposureCompensation){exp.min=caps.exposureCompensation.min;exp.max=caps.exposureCompensation.max;exp.step=caps.exposureCompensation.step||.1;exp.value=0;exp.disabled=false;$('#exposureOut').textContent='0'}else{exp.disabled=true;exp.min=exp.max=0;exp.value=0;$('#exposureOut').textContent='Automático'}
+ $('#torch').disabled=!caps.torch;$('#capabilities').textContent=[caps.zoom?'zoom':'',caps.exposureCompensation?'exposição':'',caps.torch?'flash':''].filter(Boolean).join(' · ')||'Automático';
+}
+function stopCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}track=null;$('#video').srcObject=null;$('#cameraPlaceholder').hidden=false;$('#cameraStatus').textContent='CÂMERA DESLIGADA';$('#capture').disabled=true;$('#torch').disabled=true}
+async function applyConstraint(name,value){if(!track)return;try{await track.applyConstraints({advanced:[{[name]:value}]})}catch(e){console.log('Controle não suportado',name,e)}}
+async function capture(){
+ if(!stream)return;
+ if($('#timerToggle').checked){$('#cameraStatus').textContent='FOTO EM 3…';for(let n=2;n>=0;n--){await new Promise(r=>setTimeout(r,1000));if(n>0)$('#cameraStatus').textContent='FOTO EM '+n+'…'}$('#cameraStatus').textContent='CÂMERA ATIVA'}
+ const v=$('#video'),c=document.createElement('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);
+ c.toBlob(async b=>{if(!b)return;await saveBlob(b);await loadGallery();openForEdit(b);alert('Foto salva na biblioteca do HUJ Studio AI!')},'image/jpeg',.95);
+}
+const controls=[
+ ['Exposição','exposure',0,-50,50],['Brilho','brightness',0,-50,50],['Contraste','contrast',0,-50,70],['Realces','highlights',0,-50,50],['Sombras','shadows',0,-50,50],['Saturação','saturation',0,-100,100],['Temperatura','warmth',0,-50,50],['Vinheta','vignette',0,0,60],['Nitidez','sharpness',0,0,40],['Preto e branco','mono',0,0,100]
+];
+let editValues={};
+function buildSliders(){
+ const box=$('#sliders');box.innerHTML='';
+ controls.forEach(([label,key,val,min,max])=>{
+  editValues[key]=val;const d=document.createElement('div');d.className='field';
+  d.innerHTML=`<label><span>${label}</span><output>${val}</output></label><input type="range" min="${min}" max="${max}" value="${val}" data-key="${key}">`;
+  d.querySelector('input').addEventListener('input',e=>{editValues[key]=+e.target.value;e.target.previousElementSibling.querySelector('output').value=e.target.value;applyPreview()});box.append(d);
+ });
+}
+function cssFilter(){
+ const v=editValues;
+ return `brightness(${1+v.exposure/100+v.brightness/100}) contrast(${1+v.contrast/100}) saturate(${1+v.saturation/100}) sepia(${Math.max(0,v.warmth)/100}) grayscale(${v.mono/100})`;
+}
+function applyPreview(){
+ if(!currentImage)return;
+ $('#editImage').style.filter=cssFilter();
+ $('#editImage').style.boxShadow=editValues.vignette?`inset 0 0 ${editValues.vignette}px #000`:''; 
+}
+function reset(){controls.forEach(([l,k,val])=>{editValues[k]=val;const i=$(`#sliders input[data-key="${k}"]`);i.value=val;i.previousElementSibling.querySelector('output').value=val});applyPreview()}
+function openForEdit(blob){
+ if(currentUrl)URL.revokeObjectURL(currentUrl);currentUrl=URL.createObjectURL(blob);currentImage=new Image();
+ currentImage.onload=()=>{$('#editImage').src=currentUrl;$('#editImage').style.display='block';$('#editEmpty').style.display='none';reset();showTab('edit')};currentImage.src=currentUrl;
+}
 function loadFile(file){if(file&&file.type.startsWith('image/'))openForEdit(file)}
 function showTab(name){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===name));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));if(name==='library')loadGallery()}
-async function loadGallery(){const items=await allPhotos();const g=$('#gallery');g.innerHTML='';$('#galleryEmpty').style.display=items.length?'none':'block';items.sort((a,b)=>b.created-a.created).forEach(item=>{const u=URL.createObjectURL(item.blob),im=document.createElement('img');im.className='thumb';im.src=u;im.onclick=()=>openForEdit(item.blob);g.append(im)})}
-async function exportImage(){if(!currentImage)return alert('Abra uma foto primeiro.');const c=document.createElement('canvas');c.width=currentImage.naturalWidth;c.height=currentImage.naturalHeight;const x=c.getContext('2d');x.filter=filterString();x.drawImage(currentImage,0,0);c.toBlob(async b=>{await saveBlob(b);const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='HUJ-Studio-Editada.jpg';a.click();setTimeout(()=>URL.revokeObjectURL(u),3000);loadGallery()},'image/jpeg',.95)}
-function preset(p){reset();const values={natural:[105,105,108,0,0],cinema:[96,125,90,8,0],dark:[90,120,85,12,0],mono:[100,110,0,0,100]}[p];$('#sliders').querySelectorAll('input').forEach((i,n)=>{i.value=values[n];i.previousElementSibling.querySelector('output').value=values[n]});applyFilters()}
-function analyze(){if(!currentImage)return $('#assistantResult').textContent='Abra uma foto no Editor primeiro.';const c=document.createElement('canvas');c.width=64;c.height=64;const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(currentImage,0,0,64,64);const d=x.getImageData(0,0,64,64).data;let lum=0;for(let i=0;i<d.length;i+=4)lum+=(.2126*d[i]+.7152*d[i+1]+.0722*d[i+2]);lum/=d.length/4;let msg=lum<75?'A foto parece escura. Experimente aumentar o brilho e as sombras.':lum>185?'A foto parece muito clara. Experimente reduzir o brilho ou os realces.':'A exposição geral parece equilibrada.';$('#assistantResult').innerHTML='<b>Análise concluída no aparelho.</b><br>'+msg+'<br><br>Experimente o preset Natural para uma correção discreta ou Cinematográfico para um visual mais dramático.'}
+async function loadGallery(){
+ const items=await allPhotos(),g=$('#gallery');g.innerHTML='';$('#galleryEmpty').style.display=items.length?'none':'block';
+ items.sort((a,b)=>b.created-a.created).forEach(item=>{const u=URL.createObjectURL(item.blob),im=document.createElement('img');im.className='thumb';im.src=u;im.onclick=()=>openForEdit(item.blob);g.append(im)});
+}
+function clamp(v){return Math.max(0,Math.min(255,v))}
+function exportCanvas(){
+ const c=document.createElement('canvas');c.width=currentImage.naturalWidth;c.height=currentImage.naturalHeight;
+ const x=c.getContext('2d',{willReadFrequently:true});x.filter=`brightness(${1+editValues.exposure/100+editValues.brightness/100}) contrast(${1+editValues.contrast/100}) saturate(${1+editValues.saturation/100}) sepia(${Math.max(0,editValues.warmth)/100}) grayscale(${editValues.mono/100})`;
+ x.drawImage(currentImage,0,0);x.filter='none';
+ const img=x.getImageData(0,0,c.width,c.height),d=img.data,w=c.width,h=c.height;
+ // Lightweight local tone shaping for highlights and shadows.
+ const hi=editValues.highlights/100,sh=editValues.shadows/100;
+ for(let i=0;i<d.length;i+=4){
+  for(let k=0;k<3;k++){let v=d[i+k]/255;v+=sh*(1-v)*.45-hi*v*v*.45;d[i+k]=clamp(v*255)}
+ }
+ x.putImageData(img,0,0);
+ if(editValues.vignette>0){const g=x.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,`rgba(0,0,0,${editValues.vignette/100})`);x.fillStyle=g;x.fillRect(0,0,w,h)}
+ return c;
+}
+async function exportImage(){
+ if(!currentImage)return alert('Abra uma foto primeiro.');
+ const c=exportCanvas();c.toBlob(async b=>{if(!b)return;await saveBlob(b);const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='HUJ-Studio-Editada.jpg';a.click();setTimeout(()=>URL.revokeObjectURL(u),4000);loadGallery();alert('Edição salva na Biblioteca e pronta para baixar.')},'image/jpeg',.95);
+}
+function preset(p){
+ const values={
+ natural:{brightness:3,contrast:7,saturation:5},cinema:{brightness:-4,contrast:23,highlights:-18,shadows:12,saturation:-8,warmth:4,vignette:18},
+ dark:{brightness:-9,contrast:22,highlights:-15,shadows:8,saturation:-12,warmth:5,vignette:25},
+ mono:{contrast:12,mono:100},warm:{warmth:25,saturation:8,highlights:-8},cool:{warmth:-25,contrast:8,saturation:-5}
+ }[p]||{};
+ reset();Object.entries(values).forEach(([k,v])=>{editValues[k]=v;const i=$(`#sliders input[data-key="${k}"]`);i.value=v;i.previousElementSibling.querySelector('output').value=v});applyPreview();
+}
+function analyze(){
+ if(!currentImage){$('#assistantResult').textContent='Abra uma foto no Editor primeiro.';return}
+ const c=document.createElement('canvas');c.width=96;c.height=96;const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(currentImage,0,0,96,96);
+ const d=x.getImageData(0,0,96,96).data;let lum=0,dark=0,bright=0,red=0,blue=0;
+ for(let i=0;i<d.length;i+=4){const l=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];lum+=l;if(l<45)dark++;if(l>220)bright++;red+=d[i];blue+=d[i+2]}
+ const n=d.length/4;lum/=n;dark=dark/n*100;bright=bright/n*100;
+ let advice=lum<75?'A imagem está escura: aumente Sombras (+15) e Exposição (+5).':lum>185?'A imagem está clara: reduza Realces (-15) e Exposição (-5).':'A luminosidade média está equilibrada: experimente Contraste (+8) para dar definição.';
+ if(bright>18)advice+=' Há muitos realces fortes; proteja as áreas claras.';
+ if(dark>35)advice+=' Há bastante sombra; recupere detalhes com o controle Sombras.';
+ const colorBias=red/n-blue/n;
+ const tone=colorBias>18?'A imagem tem tendência quente/vermelha.':colorBias< -18?'A imagem tem tendência fria/azulada.':'O balanço geral de cor parece neutro.';
+ $('#assistantResult').innerHTML=`<b>Análise local concluída.</b><br>Luminosidade média: ${lum.toFixed(0)}/255<br>Sombras profundas: ${dark.toFixed(1)}% · Realces fortes: ${bright.toFixed(1)}%<br><br>${advice}<br>${tone}<br><br><span class="hint">Sugestões automáticas baseadas em luminosidade e canais de cor; não é reconhecimento de objetos nem IA generativa.</span>`;
+}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
-$('#startCamera').onclick=startCamera;$('#stopCamera').onclick=stopCamera;$('#capture').onclick=capture;$('#switchCamera').onclick=()=>{facing=facing==='environment'?'user':'environment';stopCamera();startCamera()};$('#flash').onclick=()=>alert('O controle de flash contínuo não está disponível nesta versão web.');$('#choosePhoto').onclick=()=>$('#fileInput').click();$('#fileInput').onchange=e=>loadFile(e.target.files[0]);$('#resetEdit').onclick=reset;$('#saveEdit').onclick=exportImage;document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>preset(b.dataset.preset));$('#analyze').onclick=analyze;$('#refreshGallery').onclick=loadGallery;
+$('#startCamera').onclick=startCamera;$('#stopCamera').onclick=stopCamera;$('#capture').onclick=capture;
+$('#switchCamera').onclick=()=>{facing=facing==='environment'?'user':'environment';startCamera()};
+$('#torch').onclick=async()=>{if(!camCaps.torch)return;torchOn=!torchOn;await applyConstraint('torch',torchOn);$('#torch').style.background=torchOn?'#b7f36b':'#1d2430';$('#torch').style.color=torchOn?'#10140b':'#fff'};
+$('#zoom').oninput=e=>{$('#zoomOut').textContent=Number(e.target.value).toFixed(1)+'×';applyConstraint('zoom',+e.target.value)};
+$('#exposure').oninput=e=>{$('#exposureOut').textContent=e.target.value;applyConstraint('exposureCompensation',+e.target.value)};
+$('#gridToggle').onchange=e=>$('#gridline').style.display=e.target.checked?'block':'none';
+$('#choosePhoto').onclick=()=>$('#fileInput').click();$('#fileInput').onchange=e=>loadFile(e.target.files[0]);
+$('#resetEdit').onclick=reset;$('#saveEdit').onclick=exportImage;
+document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>preset(b.dataset.preset));
+$('#analyze').onclick=analyze;$('#refreshGallery').onclick=loadGallery;
 buildSliders();openDB().then(loadGallery);
-if('serviceWorker'in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 </script>
 </body></html>

@@ -1,24 +1,22 @@
-# HUJ Studio AI — versão 1.0
+# HUJ Studio AI — versão 2.0
 
-Primeira versão experimental, feita para abrir em Safari no iPhone.
+Atualização da primeira versão, mantendo o projeto PWA sem bibliotecas externas.
 
-## Incluído
-- Pré-visualização e captura pela câmera do navegador
-- Alternância entre câmera frontal e traseira
-- Importação de fotos
-- Ajustes de brilho, contraste, saturação, sépia e preto e branco
-- Presets básicos
-- Análise local simples de luminosidade
-- Biblioteca local com IndexedDB
-- Cache offline por Service Worker
+## Recursos
+- Câmera com troca frontal/traseira, temporizador e grade 3x3.
+- Controles de zoom, compensação de exposição e flash somente quando a câmera/navegador expõem suporte.
+- Editor com exposição, brilho, contraste, realces, sombras, saturação, temperatura, vinheta e preto e branco.
+- Presets Natural, Cinematográfico, Dark urbano, Preto e branco, Quente e Frio.
+- Exportação JPEG e cópia editada na biblioteca local.
+- Assistente local com análise de luminosidade, sombras, realces e tendência de cor.
+- Biblioteca IndexedDB e cache offline via Service Worker.
 
-## Limitações importantes
-- Precisa ser publicado em um endereço HTTPS para acessar a câmera.
-- Abra primeiro no Safari, permita a câmera e carregue o app online ao menos uma vez.
-- A câmera pode solicitar permissão novamente em cada abertura do app instalado na Tela de Início.
-- Controles avançados como ISO, velocidade, RAW/DNG e flash não são expostos de forma consistente pelo Safari no iPhone.
-- O assistente desta versão usa análise local simples, não um modelo generativo de IA.
-- A exportação salva uma cópia JPEG; a foto original permanece intacta.
+## Limitações
+- O Chrome/Safari no iPhone não expõe todos os controles de uma câmera nativa. ISO manual, velocidade do obturador, RAW/DNG e foco manual podem não estar disponíveis.
+- Flash/zoom/exposição só aparecem como utilizáveis quando o dispositivo informa suporte.
+- O assistente é análise computacional local por regras; não é IA generativa nem reconhecimento semântico.
+- A primeira visita deve ser feita online em HTTPS para instalar o cache. A permissão de câmera pode ser solicitada novamente.
+- Fotos são guardadas no armazenamento do navegador deste aparelho. Limpar dados do site pode apagá-las; faça exportação/backup das fotos importantes.
 
-## Publicar gratuitamente
-Envie estes arquivos para um serviço de hospedagem estática HTTPS com plano gratuito. Depois abra o endereço no Safari e use Compartilhar > Adicionar à Tela de Início.
+## Atualizar o GitHub Pages
+Substitua os arquivos antigos pelos arquivos desta pasta no repositório e confirme o commit. O Service Worker usa o cache `huj-studio-v2` para atualizar a versão anterior.
