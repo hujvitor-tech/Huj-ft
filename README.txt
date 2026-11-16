@@ -1,24 +1,20 @@
-# HUJ Studio AI — versão 2.1
+# HUJ Studio AI — versão 3.0
 
-Atualização da primeira versão, mantendo o projeto PWA sem bibliotecas externas.
+Atualização offline-first para o iPhone XR, sem bibliotecas externas e sem custo de hospedagem no GitHub Pages.
 
-## Recursos
-- Câmera com troca frontal/traseira, temporizador e grade 3x3.
-- Controles de zoom, compensação de exposição e flash somente quando a câmera/navegador expõem suporte.
-- Editor com exposição, brilho, contraste, realces, sombras, saturação, temperatura, vinheta e preto e branco.
-- Presets Natural, Cinematográfico, Dark urbano, Preto e branco, Quente e Frio.
-- Exportação JPEG e cópia editada na biblioteca local.
-- Assistente local com análise de luminosidade, sombras, realces e tendência de cor.
-- Biblioteca IndexedDB e cache offline via Service Worker.
+## Novidades 3.0
+- Melhorar automaticamente: estima luminosidade e contraste da imagem e aplica ajustes locais editáveis.
+- Histograma de luminosidade para visualizar a distribuição tonal da foto.
+- Presets personalizados: salve, aplique e exclua suas próprias combinações de ajustes neste aparelho.
+- Mantém os recursos da 2.1: câmera com grade/temporizador e controles condicionais, editor com temperatura, matiz, nitidez, vinheta, rotação, espelhamento, comparação antes/depois, presets prontos, exportação JPEG e biblioteca local.
+- Cache do Service Worker atualizado para v3.0.
 
-## Limitações
-- O Chrome/Safari no iPhone não expõe todos os controles de uma câmera nativa. ISO manual, velocidade do obturador, RAW/DNG e foco manual podem não estar disponíveis.
-- Flash/zoom/exposição só aparecem como utilizáveis quando o dispositivo informa suporte.
-- O assistente é análise computacional local por regras; não é IA generativa nem reconhecimento semântico.
-- A primeira visita deve ser feita online em HTTPS para instalar o cache. A permissão de câmera pode ser solicitada novamente.
-- Fotos são guardadas no armazenamento do navegador deste aparelho. Limpar dados do site pode apagá-las; faça exportação/backup das fotos importantes.
+## Privacidade e limitações
+- Processamento de imagem e presets personalizados acontecem localmente no navegador. Fotos não são enviadas a um servidor por este aplicativo.
+- A melhoria automática é um algoritmo simples baseado em luminosidade e contraste; não é IA generativa nem reconhecimento de objetos.
+- O histograma representa a luminosidade da imagem original aberta no editor.
+- Controles avançados da câmera dependem do suporte exposto pelo Chrome/Safari no iPhone. ISO manual, obturador manual, RAW/DNG e foco manual não são garantidos.
+- A primeira visita deve ocorrer online em HTTPS para instalar o cache. Limpar dados do site pode apagar fotos da biblioteca e presets guardados localmente; exporte/guarde fotos importantes.
 
-## Atualizar o GitHub Pages
-Substitua os arquivos antigos pelos arquivos desta pasta no repositório e confirme o commit. O Service Worker usa o cache `huj-studio-v2` para atualizar a versão anterior.
-
-NOVO NA VERSÃO 2.1: temperatura e matiz de cor, rotação, espelhamento, comparação antes/depois e nitidez aplicada na exportação. A exportação limita o lado maior a 3000 px para reduzir uso de memória em celulares.
+## Atualizar pelo GitHub no iPhone
+Substitua os cinco arquivos da raiz do repositório pelos arquivos deste pacote e confirme o commit. Não apague o README.md existente do GitHub, se quiser mantê-lo.
