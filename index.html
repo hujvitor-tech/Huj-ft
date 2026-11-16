@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="HUJ Studio AI">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon.svg">
-<title>HUJ Studio AI 2.0</title>
+<title>HUJ Studio AI 2.1</title>
 <style>
 :root{color-scheme:dark;--bg:#090b10;--panel:#141821;--panel2:#1d2430;--line:#2b3442;--muted:#9ca8b8;--accent:#b7f36b}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f4f6f8;font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
@@ -27,7 +27,7 @@ footer{text-align:center;color:#647184;font-size:11px;padding:16px}
 </style>
 </head>
 <body>
-<header><div><h1>HUJ <span style="color:var(--accent)">STUDIO AI</span></h1><small>CAPTURE · EDIT · CREATE</small></div><span class="pill">VERSION 2.0 · OFFLINE FIRST</span></header>
+<header><div><h1>HUJ <span style="color:var(--accent)">STUDIO AI</span></h1><small>CAPTURE · EDIT · CREATE</small></div><span class="pill">VERSION 2.1 · OFFLINE FIRST</span></header>
 <nav>
 <button class="active" data-tab="camera">Câmera Pro</button><button data-tab="edit">Editor Pro</button><button data-tab="library">Biblioteca</button><button data-tab="assistant">Assistente IA</button>
 </nav>
@@ -50,6 +50,7 @@ footer{text-align:center;color:#647184;font-size:11px;padding:16px}
   <input id="fileInput" type="file" accept="image/*" hidden>
   <p class="hint">Edite uma captura ou importe uma imagem. A original não é alterada.</p>
   <img id="editImage" alt="Prévia da foto em edição">
+  <div class="grid" style="margin-top:10px"><button class="btn" id="rotatePhoto">↻ Girar 90°</button><button class="btn" id="flipPhoto">⇋ Espelhar</button><button class="btn" id="comparePhoto">Antes / Depois</button></div>
   <div id="editEmpty" class="empty">Sua foto aparecerá aqui.</div>
  </div>
  <div class="panel">
@@ -74,7 +75,7 @@ footer{text-align:center;color:#647184;font-size:11px;padding:16px}
  <div class="panel"><b>Como funciona</b><p class="hint">Esta versão usa análise computacional local e regras fotográficas. Não é IA generativa nem reconhecimento semântico de objetos. Recursos de IA maiores exigiriam modelos compatíveis com a memória e o processamento do iPhone XR.</p></div>
 </section>
 </main>
-<footer>HUJ STUDIO AI · VERSÃO 2.0 · PROCESSAMENTO LOCAL</footer>
+<footer>HUJ STUDIO AI · VERSÃO 2.1 · PROCESSAMENTO LOCAL</footer>
 <script>
 const $=s=>document.querySelector(s);
 let stream=null,facing='environment',currentImage=null,currentUrl=null,db=null,track=null,torchOn=false,camCaps={};
@@ -106,9 +107,9 @@ async function capture(){
  c.toBlob(async b=>{if(!b)return;await saveBlob(b);await loadGallery();openForEdit(b);alert('Foto salva na biblioteca do HUJ Studio AI!')},'image/jpeg',.95);
 }
 const controls=[
- ['Exposição','exposure',0,-50,50],['Brilho','brightness',0,-50,50],['Contraste','contrast',0,-50,70],['Realces','highlights',0,-50,50],['Sombras','shadows',0,-50,50],['Saturação','saturation',0,-100,100],['Temperatura','warmth',0,-50,50],['Vinheta','vignette',0,0,60],['Nitidez','sharpness',0,0,40],['Preto e branco','mono',0,0,100]
+ ['Exposição','exposure',0,-50,50],['Brilho','brightness',0,-50,50],['Contraste','contrast',0,-50,70],['Realces','highlights',0,-50,50],['Sombras','shadows',0,-50,50],['Saturação','saturation',0,-100,100],['Temperatura','warmth',0,-50,50],['Matiz','tint',0,-50,50],['Vinheta','vignette',0,0,60],['Nitidez','sharpness',0,0,40],['Preto e branco','mono',0,0,100]
 ];
-let editValues={};
+let editValues={},rotation=0,flipped=false,showOriginal=false;
 function buildSliders(){
  const box=$('#sliders');box.innerHTML='';
  controls.forEach(([label,key,val,min,max])=>{
@@ -119,14 +120,16 @@ function buildSliders(){
 }
 function cssFilter(){
  const v=editValues;
- return `brightness(${1+v.exposure/100+v.brightness/100}) contrast(${1+v.contrast/100}) saturate(${1+v.saturation/100}) sepia(${Math.max(0,v.warmth)/100}) grayscale(${v.mono/100})`;
+ return `brightness(${1+v.exposure/100+v.brightness/100}) contrast(${1+v.contrast/100}) saturate(${1+v.saturation/100}) sepia(${Math.max(0,v.warmth)/125}) hue-rotate(${Math.min(0,v.warmth)*.35}deg) grayscale(${v.mono/100})`;
 }
 function applyPreview(){
  if(!currentImage)return;
- $('#editImage').style.filter=cssFilter();
- $('#editImage').style.boxShadow=editValues.vignette?`inset 0 0 ${editValues.vignette}px #000`:''; 
+ const im=$('#editImage');
+ im.style.filter=showOriginal?'none':cssFilter();
+ im.style.transform=showOriginal?'none':`rotate(${rotation}deg) scaleX(${flipped?-1:1})`;
+ im.style.boxShadow='none';
 }
-function reset(){controls.forEach(([l,k,val])=>{editValues[k]=val;const i=$(`#sliders input[data-key="${k}"]`);i.value=val;i.previousElementSibling.querySelector('output').value=val});applyPreview()}
+function reset(){controls.forEach(([l,k,val])=>{editValues[k]=val;const i=$(`#sliders input[data-key="${k}"]`);i.value=val;i.previousElementSibling.querySelector('output').value=val});rotation=0;flipped=false;showOriginal=false;$('#comparePhoto').textContent='Antes / Depois';applyPreview()}
 function openForEdit(blob){
  if(currentUrl)URL.revokeObjectURL(currentUrl);currentUrl=URL.createObjectURL(blob);currentImage=new Image();
  currentImage.onload=()=>{$('#editImage').src=currentUrl;$('#editImage').style.display='block';$('#editEmpty').style.display='none';reset();showTab('edit')};currentImage.src=currentUrl;
@@ -139,16 +142,26 @@ async function loadGallery(){
 }
 function clamp(v){return Math.max(0,Math.min(255,v))}
 function exportCanvas(){
- const c=document.createElement('canvas');c.width=currentImage.naturalWidth;c.height=currentImage.naturalHeight;
- const x=c.getContext('2d',{willReadFrequently:true});x.filter=`brightness(${1+editValues.exposure/100+editValues.brightness/100}) contrast(${1+editValues.contrast/100}) saturate(${1+editValues.saturation/100}) sepia(${Math.max(0,editValues.warmth)/100}) grayscale(${editValues.mono/100})`;
- x.drawImage(currentImage,0,0);x.filter='none';
+ const maxSide=3000,scale=Math.min(1,maxSide/Math.max(currentImage.naturalWidth,currentImage.naturalHeight));
+ const sw=Math.max(1,Math.round(currentImage.naturalWidth*scale)),sh=Math.max(1,Math.round(currentImage.naturalHeight*scale));
+ const sideways=Math.abs(rotation)%180===90;
+ const c=document.createElement('canvas');c.width=sideways?sh:sw;c.height=sideways?sw:sh;
+ const x=c.getContext('2d',{willReadFrequently:true});x.save();x.translate(c.width/2,c.height/2);x.rotate(rotation*Math.PI/180);x.scale(flipped?-1:1,1);x.filter=`brightness(${1+editValues.exposure/100+editValues.brightness/100}) contrast(${1+editValues.contrast/100}) saturate(${1+editValues.saturation/100}) sepia(${Math.max(0,editValues.warmth)/100}) grayscale(${editValues.mono/100})`;
+ x.drawImage(currentImage,-sw/2,-sh/2,sw,sh);x.restore();x.filter='none';
  const img=x.getImageData(0,0,c.width,c.height),d=img.data,w=c.width,h=c.height;
  // Lightweight local tone shaping for highlights and shadows.
- const hi=editValues.highlights/100,sh=editValues.shadows/100;
+ const hi=editValues.highlights/100,shadowAmt=editValues.shadows/100,warm=editValues.warmth*.7,tint=editValues.tint*.65;
  for(let i=0;i<d.length;i+=4){
-  for(let k=0;k<3;k++){let v=d[i+k]/255;v+=sh*(1-v)*.45-hi*v*v*.45;d[i+k]=clamp(v*255)}
+  for(let k=0;k<3;k++){let v=d[i+k]/255;v+=shadowAmt*(1-v)*.45-hi*v*v*.45;d[i+k]=clamp(v*255)}
+  d[i]=clamp(d[i]+warm-tint*.25);d[i+1]=clamp(d[i+1]+tint);d[i+2]=clamp(d[i+2]-warm-tint*.25);
  }
  x.putImageData(img,0,0);
+ if(editValues.sharpness>0&&c.width>2&&c.height>2){
+  const src=new Uint8ClampedArray(x.getImageData(0,0,c.width,c.height).data),out=x.createImageData(c.width,c.height),dst=out.data,a=editValues.sharpness/100*.28,w=c.width,h=c.height;
+  dst.set(src);
+  for(let y=1;y<h-1;y++)for(let xx=1;xx<w-1;xx++){const i=(y*w+xx)*4;for(let k=0;k<3;k++){const sum=src[i-4+k]+src[i+4+k]+src[i-w*4+k]+src[i+w*4+k];dst[i+k]=clamp(src[i+k]*(1+4*a)-sum*a)}}
+  x.putImageData(out,0,0);
+ }
  if(editValues.vignette>0){const g=x.createRadialGradient(w/2,h/2,Math.min(w,h)*.18,w/2,h/2,Math.max(w,h)*.72);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,`rgba(0,0,0,${editValues.vignette/100})`);x.fillStyle=g;x.fillRect(0,0,w,h)}
  return c;
 }
@@ -186,6 +199,9 @@ $('#exposure').oninput=e=>{$('#exposureOut').textContent=e.target.value;applyCon
 $('#gridToggle').onchange=e=>$('#gridline').style.display=e.target.checked?'block':'none';
 $('#choosePhoto').onclick=()=>$('#fileInput').click();$('#fileInput').onchange=e=>loadFile(e.target.files[0]);
 $('#resetEdit').onclick=reset;$('#saveEdit').onclick=exportImage;
+$('#rotatePhoto').onclick=()=>{rotation=(rotation+90)%360;applyPreview()};
+$('#flipPhoto').onclick=()=>{flipped=!flipped;applyPreview()};
+$('#comparePhoto').onclick=()=>{showOriginal=!showOriginal;$('#comparePhoto').textContent=showOriginal?'Voltar à edição':'Antes / Depois';applyPreview()};
 document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>preset(b.dataset.preset));
 $('#analyze').onclick=analyze;$('#refreshGallery').onclick=loadGallery;
 buildSliders();openDB().then(loadGallery);

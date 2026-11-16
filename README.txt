@@ -1,4 +1,4 @@
-# HUJ Studio AI — versão 2.0
+# HUJ Studio AI — versão 2.1
 
 Atualização da primeira versão, mantendo o projeto PWA sem bibliotecas externas.
 
@@ -20,3 +20,5 @@ Atualização da primeira versão, mantendo o projeto PWA sem bibliotecas extern
 
 ## Atualizar o GitHub Pages
 Substitua os arquivos antigos pelos arquivos desta pasta no repositório e confirme o commit. O Service Worker usa o cache `huj-studio-v2` para atualizar a versão anterior.
+
+NOVO NA VERSÃO 2.1: temperatura e matiz de cor, rotação, espelhamento, comparação antes/depois e nitidez aplicada na exportação. A exportação limita o lado maior a 3000 px para reduzir uso de memória em celulares.
