@@ -1,0 +1,11 @@
+{
+  "name": "HUJ Studio AI",
+  "short_name": "HUJ Studio",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090b10",
+  "theme_color": "#090b10",
+  "description": "Câmera e editor de fotografias offline-first."
+}
